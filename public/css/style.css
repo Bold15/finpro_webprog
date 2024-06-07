@@ -1,0 +1,47 @@
+/* public/css/home.css */
+
+#home .carousel-caption {
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
+    padding: 20px;
+}
+
+#home .carousel-caption h1 {
+    font-size: 2.5rem;
+    font-weight: bold;
+}
+
+#home .carousel-caption h5 {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+}
+
+#home .carousel-caption .btn {
+    font-size: 1rem;
+    padding: 10px 20px;
+    border-radius: 30px;
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 50%;
+}
+
+.carousel-control-prev-icon {
+    background-image: url('data:image/svg+xml;charset=utf8,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' fill=\'%23fff\' viewBox=\'0 0 8 8\'%3E%3Cpath d=\'M4.854 0L2 2.854 4.146 5 5 4.146 2.707 1.854 5 .146 4.854 0z\'/%3E%3C/svg%3E');
+}
+
+.carousel-control-next-icon {
+    background-image: url('data:image/svg+xml;charset=utf8,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' fill=\'%23fff\' viewBox=\'0 0 8 8\'%3E%3Cpath d=\'M3.146 0L.292 2.854 3.146 5 4 4.146 1.707 1.854 4 .146 3.146 0z\'/%3E%3C/svg%3E');
+}
+
+.register-btn {
+    margin-left: 70rem;
+    color: var(--main-color);
+}
+
+.login-btn {
+    margin-left: 70rem;
+    color: var(--main-color);
+}

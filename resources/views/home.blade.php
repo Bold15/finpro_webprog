@@ -6,7 +6,7 @@
         <div id="header-carousel" class="carousel slide carousel-fade" data-bs-ride="carousel">
             <div class="carousel-inner">
                 <div class="carousel-item active">
-                    <img class="w-100" src="{{ asset('img/slide1.png') }}" alt="Image">
+                    <!-- <img class="w-100" src="{{ asset('img/slide1.png') }}" alt="Image"> -->
                     <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
                         <div class="p-3" style="max-width: 900px;">
                             <h5 class="text-white text-uppercase">RescueAid Indonesia</h5>
@@ -17,7 +17,7 @@
                     </div>
                 </div>
                 <div class="carousel-item">
-                    <img class="w-100" src="{{ asset('img/slide2.png') }}" alt="Image">
+                    <!-- <img class="w-100" src="{{ asset('img/slide2.png') }}" alt="Image"> -->
                     <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
                         <div class="p-3" style="max-width: 900px;">
                             <h5 class="text-white text-uppercase">RescueAid Indonesia</h5>

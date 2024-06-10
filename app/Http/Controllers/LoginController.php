@@ -20,7 +20,7 @@ class LoginController extends Controller
                 return redirect()->back()->withErrors(['message'=>'User not found'])->withInput();
             }
         }
-    public function registration(Request $request){
+    public function register(Request $request){
         $user = new \App\Models\User;
         $user->name = $request->name;   
         $user->email = $request->email;

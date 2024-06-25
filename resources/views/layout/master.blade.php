@@ -27,10 +27,10 @@
                 <li class="nav-item">
                     <a class="nav-link {{ Request::routeIs('cart.index') ? 'active' : '' }}" href="{{ route('cart.index') }}">Cart</a>
                 </li>
-                @auth
                     <li class="nav-item">
                         <a class="nav-link {{ Request::routeIs('profile.show') ? 'active' : '' }}" href="{{ route('profile.show') }}">Profile</a>
                     </li>
+                @auth
                     <li class="nav-item">
                         <a class="nav-link" href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">

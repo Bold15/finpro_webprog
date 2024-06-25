@@ -5,13 +5,15 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use App\Models\Address;
 
 class ProfileController extends Controller
 {
     public function show()
     {
         $user = Auth::user();
-        return view('profile.show', compact('user'));
+        $addresses = Address::where('user_id', $user->user_id)->get();
+        return view('profile.show', compact('user', 'addresses'));
     }
 
     public function edit()

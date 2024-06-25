@@ -5,7 +5,7 @@
         <div class="row">
             <div class="col-md-6 offset-md-3">
                 <h1>Edit Product</h1>
-                <form action="{{ route('products.update', $product->id) }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('products.update', $product->product_id) }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
                     <div class="form-group">
@@ -13,7 +13,7 @@
                         <select class="form-control" id="category_id" name="category_id" required>
                             <!-- Iterate through categories to display options -->
                             @foreach($categories as $category)
-                                <option value="{{ $category->id }}" {{ $category->id == $product->category_id ? 'selected' : '' }}>{{ $category->name }}</option>
+                                <option value="{{ $category->category_id }}" {{ $category->id == $product->category_id ? 'selected' : '' }}>{{ $category->name }}</option>
                             @endforeach
                         </select>
                     </div>

@@ -9,8 +9,10 @@ class CreateCartsTable extends Migration
     public function up()
     {
         Schema::create('carts', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->id('cart_id');
+            $table->foreignId('user_id')->constrained('users', 'user_id')->onDelete('cascade');
+            $table->foreignId('product_id')->constrained('products', 'product_id')->onDelete('cascade');
+            $table->integer('quantity');
             $table->timestamps();
         });
     }

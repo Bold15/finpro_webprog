@@ -1,9 +1,9 @@
-@extends('layout.master')
+@extends('admin.layouts.master')
 
 @section('content')
     <div class="container mt-4">
         <h1>Edit Category</h1>
-        <form action="{{ route('categories.update', $category->id) }}" method="POST">
+        <form action="{{ route('categories.update', $category->category_id) }}" method="POST">
             @csrf
             @method('PUT')
             <div class="form-group">
@@ -12,7 +12,7 @@
             </div>
             <button type="submit" class="btn btn-primary mt-3">Update</button>
         </form>
-        <form action="{{ route('categories.destroy', $category->id) }}" method="POST" class="mt-3">
+        <form action="{{ route('categories.destroy', $category->category_id) }}" method="POST" class="mt-3">
             @csrf
             @method('DELETE')
             <button type="submit" class="btn btn-danger">Delete</button>

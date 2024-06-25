@@ -9,14 +9,15 @@ class CreateAddressesTable extends Migration
     public function up()
     {
         Schema::create('addresses', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->string('address_line1');
-            $table->string('address_line2')->nullable();
-            $table->string('city');
-            $table->string('state');
-            $table->string('postal_code');
-            $table->string('country');
+            $table->id('address_id');
+            $table->foreignId('user_id')->constrained('users', 'user_id')->onDelete('cascade');
+            $table->string('alamat')->nullable();
+            $table->string('provinsi')->nullable();
+            $table->string('kota');
+            $table->string('kecamatan');
+            $table->string('kabupaten');
+            $table->string('kode_pos');
+            $table->string('nomor_hp');
             $table->timestamps();
         });
     }

@@ -46,4 +46,37 @@ public function showRegistrationForm()
     return view('register');
 }
 
+public function authenticateAdmin(Request $requestAdmin){
+    if(Auth::attempt(
+        [
+            'email' => $requestAdmin->email,
+            'password'=>$requestAdmin->password
+        ])){
+            return redirect('/admin');
+        }
+        else{
+            return redirect()->back()->withErrors(['message'=>'User not found'])->withInput();
+        }
+    }
+
+    public function registerAdmin(Request $requestAdmin){
+        $admin = new \App\Models\Admin;
+        $admin->name = $requestAdmin->name;   
+        $admin->email = $requestAdmin->email;
+        $admin->password = \Hash::make($requestAdmin->password);
+        $admin->save();
+
+        return redirect('login')->with('success', 'Registration successful. Please login.');
+    }
+
+public function showLoginFormAdmin()
+{
+    return view('admin.login');
+}
+
+public function showRegistrationFormAdmin()
+{
+    return view('admin.register');
+}
+
 }

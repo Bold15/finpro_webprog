@@ -1,4 +1,4 @@
-@extends('layout.master')
+@extends('admin.layouts.master')
 
 @section('content')
     <div class="container">
@@ -13,6 +13,7 @@
                     </div>
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </form>
+                <a href="{{ route('categories.index') }}" class="btn btn-secondary mt-3">View All Categories</a>
             </div>
         </div>
     </div>

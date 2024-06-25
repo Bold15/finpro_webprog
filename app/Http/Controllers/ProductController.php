@@ -15,33 +15,37 @@ class ProductController extends Controller
     }
 
     public function store(Request $request)
-    {
-        $request->validate([
-            'category_id' => 'required|exists:categories,id',
-            'name' => 'required|string|max:255',
-            'description' => 'nullable|string',
-            'price' => 'required|numeric',
-            'stock' => 'required|integer',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
-        ]);
+{
+    $request->validate([
+        'category_id' => 'required|exists:categories,category_id',
+        'name' => 'required|string|max:255',
+        'description' => 'nullable|string',
+        'price' => 'required|numeric',
+        'stock' => 'required|integer',
+        'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+    ]);
 
-        $imagePath = $request->file('image')->store('images', 'public');
+    // dd($request->all());
 
-        Product::create([
-            'category_id' => $request->category_id,
-            'name' => $request->name,
-            'description' => $request->description,
-            'price' => $request->price,
-            'stock' => $request->stock,
-            'image' => '/storage/' . $imagePath,
-        ]);
+    // Handle image upload
+    $imagePath = $request->file('image')->store('images', 'public');
 
-        return redirect()->route('products.index')->with('success', 'Product created successfully.');
-    }
+    // Create the product
+    $product = Product::create([
+        'category_id' => $request->category_id,
+        'name' => $request->name,
+        'description' => $request->description,
+        'price' => $request->price,
+        'stock' => $request->stock,
+        'image' => '/storage/' . $imagePath, // Make sure to prepend with /storage/
+    ]);
+
+    return redirect()->route('products.index')->with('success', 'Product created successfully.');
+}
 
     public function index()
     {
-        $products = Product::all();
+        $products = Product::with('category')->get();
         return view('products.index', compact('products'));
     }
 
@@ -54,14 +58,15 @@ class ProductController extends Controller
     public function edit($id)
     {
         $product = Product::findOrFail($id);
-        return view('products.edit', compact('product'));
+        $categories = Category::all();
+        return view('products.edit', compact('product', 'categories'));
     }
 
     public function update(Request $request, $id)
     {
         $product = Product::findOrFail($id);
         $request->validate([
-            'category_id' => 'required|exists:categories,id',
+            'category_id' => 'required|exists:categories,category_id',
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
             'price' => 'required|numeric',

@@ -12,26 +12,48 @@ use Illuminate\Support\Facades\Auth;
 class PurchaseController extends Controller
 {
     public function confirm(Request $request)
-    {
-        $productIds = $request->input('product_ids');
-        $quantities = $request->input('quantities');
+{
+    // Validate input
+    $validatedData = $request->validate([
+        'product_ids' => 'required|array',
+        'product_ids.*' => 'exists:products,product_id',
+        'quantities' => 'required|array',
+        'quantities.*' => 'integer|min:1',
+    ]);
 
-        $user = Auth::user();
-        $addresses = Address::where('user_id', $user->user_id)->get();
+    // Debug: Check the validated data
+    dd($validatedData);
 
-        $products = Product::whereIn('product_id', $productIds)->get();
-        $totalAmount = 0;
-        foreach ($products as $product) {
-            $index = array_search($product->product_id, $productIds);
-            $totalAmount += $product->price * $quantities[$index];
-        }
+    $productIds = $request->input('product_ids');
+    $quantities = $request->input('quantities');
 
-        return view('purchase.confirm', compact('products', 'quantities', 'addresses', 'totalAmount', 'productIds'));
+    if (count($productIds) !== count($quantities)) {
+        return redirect()->back()->withErrors('Product IDs and quantities do not match.');
     }
+
+    $user = Auth::user();
+    $addresses = Address::where('user_id', $user->id)->get();
+
+    $products = Product::whereIn('product_id', $productIds)->get();
+
+    $totalAmount = 0;
+    foreach ($products as $product) {
+        $index = array_search($product->product_id, $productIds);
+        $totalAmount += $product->price * $quantities[$index];
+    }
+
+    return view('purchase.confirm', compact('products', 'quantities', 'addresses', 'totalAmount', 'productIds'));
+}
+
 
     public function finalize(Request $request)
     {
+        // Validate input
         $request->validate([
+            'product_ids' => 'required|array',
+            'product_ids.*' => 'exists:products,product_id',
+            'quantities' => 'required|array',
+            'quantities.*' => 'integer|min:1',
             'proof_of_payment' => 'required|image|max:2048',
         ]);
 
@@ -39,6 +61,10 @@ class PurchaseController extends Controller
 
         $productIds = $request->input('product_ids');
         $quantities = $request->input('quantities');
+
+        if (count($productIds) !== count($quantities)) {
+            return redirect()->back()->withErrors('Product IDs and quantities do not match.');
+        }
 
         foreach ($productIds as $index => $productId) {
             $quantity = $quantities[$index];

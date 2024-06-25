@@ -160,7 +160,7 @@ Route::get('/purchase', function () {
 //     Route::get('/products', [ApiProductController::class, 'index'])->name('products.index');
 // Route::post('/products', [ApiProductController::class, 'store'])->name('products.store');
 
-Route::post('/purchase/confirm', [PurchaseController::class, 'confirm'])->name('purchase.confirm');
+Route::get('/purchase/confirm', [PurchaseController::class, 'confirm'])->name('purchase.confirm');
 Route::post('/purchase/finalize', [PurchaseController::class, 'finalize'])->name('purchase.finalize');
 
 

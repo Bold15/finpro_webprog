@@ -16,6 +16,7 @@ class Purchase extends Model
         'product_id',
         'quantity',
         'proof_of_payment',
+        'confirmed',
     ];
 
     public function user()

@@ -28,7 +28,7 @@
                         <a class="nav-link {{ Request::routeIs('categories.create') ? 'active' : '' }}" href="{{ route('categories.create') }}">Categories</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {{ Request::routeIs('admin.orders') ? 'active' : '' }}" href="{{ route('confirm.index') }}">Order</a>
+                        <a class="nav-link {{ Request::routeIs('purchase.confirm') ? 'active' : '' }}" href="{{ route('purchase.confirm') }}">Order</a>
                     </li>
                     <!-- <li class="nav-item">
                         <a class="nav-link {{ Request::routeIs('profile.show') ? 'active' : '' }}" href="{{ route('profile.show') }}">Profile</a>

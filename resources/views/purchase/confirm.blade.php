@@ -1,44 +1,34 @@
-@extends('layout.master')
+<!-- resources/views/purchase/confirm.blade.php -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirm Purchase</title>
+</head>
+<body>
+    <h1>Confirm Purchase</h1>
 
-@section('content')
-    <div class="container mt-4">
-        <h1>Konfirmasi Pembelian</h1>
-        <div class="card">
-            <div class="card-body">
-                <h5>Produk yang Dipesan:</h5>
-                <ul>
-                    @foreach ($products as $index => $product)
-                        <li>{{ $product->name }} - {{ $quantities[$index] }} pcs - ${{ $product->price * $quantities[$index] }}</li>
-                    @endforeach
-                </ul>
-                <h5>Alamat Pengiriman:</h5>
-                <ul>
-                    @foreach ($addresses as $address)
-                        <li>
-                            {{ $address->alamat }}<br>
-                            {{ $address->provinsi }}, {{ $address->kota }}<br>
-                            {{ $address->kecamatan }}, {{ $address->kabupaten }}<br>
-                            {{ $address->kode_pos }}<br>
-                            {{ $address->nomor_hp }}
-                        </li>
-                    @endforeach
-                </ul>
-                <h5>Total Harga: ${{ $totalAmount }}</h5>
-                <form action="{{ route('purchase.finalize') }}" method="POST" enctype="multipart/form-data">
-                    @csrf
-                    @foreach ($productIds as $productId)
-                        <input type="hidden" name="product_ids[]" value="{{ $productId }}">
-                    @endforeach
-                    @foreach ($quantities as $quantity)
-                        <input type="hidden" name="quantities[]" value="{{ $quantity }}">
-                    @endforeach
-                    <div class="form-group">
-                        <label for="proof_of_payment">Unggah Bukti Pembayaran:</label>
-                        <input type="file" class="form-control" id="proof_of_payment" name="proof_of_payment" required>
-                    </div>
-                    <button type="submit" class="btn btn-success">Konfirmasi Pembelian</button>
-                </form>
+    @if(session('error'))
+        <div>{{ session('error') }}</div>
+    @endif
+
+    <form action="{{ route('purchase.finalize') }}" method="POST" enctype="multipart/form-data">
+        @csrf
+        @foreach($products as $index => $product)
+            <div>
+                <span>{{ $product->name }} - {{ $quantities[$index] }} x {{ $product->price }}</span>
+                <input type="hidden" name="product_ids[]" value="{{ $product->product_id }}">
+                <input type="hidden" name="quantities[]" value="{{ $quantities[$index] }}">
             </div>
+        @endforeach
+
+        <div>
+            <label for="proof_of_payment">Proof of Payment:</label>
+            <input type="file" name="proof_of_payment" id="proof_of_payment" required>
         </div>
-    </div>
-@endsection
+
+        <button type="submit">Finalize Purchase</button>
+    </form>
+</body>
+</html>

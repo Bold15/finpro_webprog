@@ -20,7 +20,7 @@
                     <li class="nav-item">
                         <a class="nav-link {{ Request::routeIs('admin.dashboard') ? 'active' : '' }}" href="{{ route('admin.dashboard') }}">Dashboard</a>
                     </li>
-                    <!-- @auth -->
+                    @auth
                     <li class="nav-item">
                         <a class="nav-link {{ Request::routeIs('products.create') ? 'active' : '' }}" href="{{ route('products.create') }}">Products</a>
                     </li>
@@ -28,8 +28,9 @@
                         <a class="nav-link {{ Request::routeIs('categories.create') ? 'active' : '' }}" href="{{ route('categories.create') }}">Categories</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {{ Request::routeIs('purchase.confirm') ? 'active' : '' }}" href="{{ route('purchase.confirm') }}">Order</a>
+                        <a class="nav-link {{ Request::routeIs('purchase.orders') ? 'active' : '' }}" href="{{ route('purchase.orders') }}">Order</a>
                     </li>
+
                     <!-- <li class="nav-item">
                         <a class="nav-link {{ Request::routeIs('profile.show') ? 'active' : '' }}" href="{{ route('profile.show') }}">Profile</a>
                     </li> -->
@@ -39,14 +40,14 @@
                             @csrf
                         </form>
                     </li> -->
-                <!-- @else
+                @else
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('admin.login') }}">Login</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('admin.register') }}">Register</a>
-                    </li> -->
-                <!-- @endauth -->
+                    </li>
+                @endauth
                 </ul>
             </div>
         </div>

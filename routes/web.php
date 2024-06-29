@@ -161,6 +161,8 @@ Route::get('/purchase', function () {
 // Route::post('/products', [ApiProductController::class, 'store'])->name('products.store');
 
 Route::get('/purchase/confirm', [PurchaseController::class, 'confirm'])->name('purchase.confirm');
+Route::post('/purchase/confirm', [PurchaseController::class, 'confirm'])->name('purchase.confirm');
+
 Route::post('/purchase/finalize', [PurchaseController::class, 'finalize'])->name('purchase.finalize');
 
 
@@ -168,3 +170,7 @@ Route::get('/confirm', [ConfirmController::class, 'index'])->name('confirm.index
     Route::post('/confirm/{purchase}', [ConfirmController::class, 'confirm'])->name('confirm.confirm');
 
 // Route::get('/admin', [AdminController::class, 'index'])->middleware(AdminMiddleware::class)->name('admin.index');
+
+Route::get('/purchase/orders', [PurchaseController::class, 'orders'])->name('purchase.orders');
+Route::post('/purchase/orders/{order}/confirm', [PurchaseController::class, 'confirmOrder'])->name('purchase.confirmOrder');
+

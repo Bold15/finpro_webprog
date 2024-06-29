@@ -22,7 +22,7 @@ class PurchaseController extends Controller
     ]);
 
     // Debug: Check the validated data
-    dd($validatedData);
+    // dd($validatedData);
 
     $productIds = $request->input('product_ids');
     $quantities = $request->input('quantities');
@@ -81,5 +81,40 @@ class PurchaseController extends Controller
         Cart::where('user_id', auth()->id())->delete();
 
         return redirect()->route('cart.index')->with('success', 'Pembelian berhasil! Bukti pembayaran Anda telah dikirim.');
+    }
+
+    public function orders()
+    {
+        $purchases = Purchase::with('product')->where('user_id', auth()->id())->get();
+
+        // Decode JSON fields
+        foreach ($purchases as $purchase) {
+            $purchase->product_ids = json_decode($purchase->product_ids);
+            $purchase->quantities = json_decode($purchase->quantities);
+        }
+
+        return view('purchase.orders', compact('purchases'));
+    }
+
+    // Mengkonfirmasi pesanan dan mengurangi stok produk
+    public function confirmOrder(Request $request, Purchase $order)
+    {
+        $order->product_ids = json_decode($order->product_ids);
+        $order->quantities = json_decode($order->quantities);
+
+        foreach ($order->product_ids as $index => $productId) {
+            $product = Product::findOrFail($productId);
+            $quantity = $order->quantities[$index];
+
+            // Mengurangi stok produk
+            $product->stock -= $quantity;
+            $product->save();
+        }
+
+        // Update status pesanan (misal: status menjadi 'confirmed')
+        $order->status = 'confirmed';
+        $order->save();
+
+        return redirect()->route('purchase.orders')->with('success', 'Pesanan telah dikonfirmasi dan stok telah dikurangi.');
     }
 }
